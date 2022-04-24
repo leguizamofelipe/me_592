@@ -1,0 +1,105 @@
+#VRML_SIM R2022a utf8
+WorldInfo {
+  basicTimeStep 64
+}
+Viewpoint {
+  orientation 0.30354901608126383 0.7450896028306858 -0.5938850718697244 0.9904195757711772
+  position -2.647008604649702 1.7269326318433966 2.8127675678260586
+  follow "TurtleBot3Burger"
+  followType "Pan and Tilt Shot"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+CircleArena {
+  radius 1.7
+  wallHeight 0.4
+}
+WoodenBox {
+  translation 0.877367 -0.545426 0.15
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation 1.22737 0.054574 0.15
+  name "wooden box(8)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation 1.22737 0.724574 0.15
+  name "wooden box(10)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation -0.28263 1.12457 0.15
+  name "wooden box(11)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation 0.48618 0.91342 0.15
+  name "wooden box(1)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation -0.15697 0.472967 0.15
+  name "wooden box(2)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation -0.85271 0.44968 0.15
+  name "wooden box(3)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation -0.87271 1.15968 0.15
+  name "wooden box(12)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation -1.09887 -0.301011 0.15
+  name "wooden box(4)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation -0.48307 -0.22263 0.15
+  name "wooden box(7)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation 0.48103 0.203241 0.15
+  name "wooden box(9)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation 0.005323 -0.58959 0.15
+  name "wooden box(5)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation 0.415323 -1.14959 0.15
+  name "wooden box(13)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation -0.6174 -0.9298 0.15
+  name "wooden box(6)"
+  size 0.3 0.3 0.3
+}
+WoodenBox {
+  translation -0.2074 -1.2998 0.15
+  name "wooden box(14)"
+  size 0.3 0.3 0.3
+}
+TurtleBot3Burger {
+  hidden rotation_9 -0.7071047809782778 -6.78056995911854e-16 -0.7071087813891594 3.141588
+  hidden rotation_10 0.004775774432190708 0.9999875439199609 -0.0014505114605211072 0.004455596766671398
+  translation -6.718718893738984e-09 -5.624575009845374e-10 -0.0004934370913047062
+  rotation -0.00210485494590804 -0.9999977847400648 1.0030926647509807e-05 0.009364993302449732
+  controller "turtlebot_rl"
+  extensionSlot [
+    GPS {
+    }
+    RobotisLds01 {
+    }
+  ]
+}
