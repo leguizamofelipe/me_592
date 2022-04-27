@@ -1,17 +1,21 @@
 from cmath import inf
-from controller import Robot, Motor, Lidar, GPS
+from controller import Robot, GPS, Supervisor
 import numpy as np
 from point import Point
 
 class Turtlebot():
     def __init__(self):
         ####################### WEBOTS ENV SETUP #####################################
-        # create the Robot instance.
-        self.robot = Robot()
-        # lidar = Lidar()
+        # self.robot = Supervisor()
+        self.robot = Supervisor()
+        self.initialize_devices()
 
+
+    def initialize_devices(self):
         self.TIME_STEP = 64
         self.MAX_SPEED = 6.67
+
+        self.robot.step(self.TIME_STEP)
 
         # get a handler to the motors and set target position to infinity (speed control)
         self.lidar = self.robot.getDevice('LDS-01')
@@ -38,16 +42,16 @@ class Turtlebot():
         while(self.robot.step(self.TIME_STEP) != -1):
             vals = np.array(self.lidar.getRangeImage())
             break
-        vals[vals==np.inf] = 0.001
+        vals[vals==np.inf] = 999
         # print(vals)
         vals = vals[90:270]
         return vals
 
     def set_right_motor(self, val):
-        self.right_motor.setVelocity(val * self.MAX_SPEED)
+        self.right_motor.setVelocity(abs(val * self.MAX_SPEED))
 
     def set_left_motor(self, val):
-        self.left_motor.setVelocity(val * self.MAX_SPEED)
+        self.left_motor.setVelocity(abs(val * self.MAX_SPEED))
 
     def get_right_motor(self):
         return self.right_motor.getVelocity() / self.MAX_SPEED

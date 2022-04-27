@@ -5,6 +5,7 @@ import os
 from random import randint
 import math
 import pickle
+# from controller import Supervisor
 
 import matplotlib.pyplot as plt
 import time
@@ -30,7 +31,7 @@ class TurtlebotEnv(gym.Env):
 
         # Observe current motor speeds and 180 point LIDAR scan
         self.observation_space = spaces.Box
-        self.observation_space.n = 182
+        self.observation_space.n = 182 # TODO - Add robot's current position
         self.observation_space.low = np.ones(self.observation_space.n) * -1
         self.observation_space.high = np.ones(self.observation_space.n)
 
@@ -62,19 +63,22 @@ class TurtlebotEnv(gym.Env):
         self._take_action(action)
 
         lidar_vals = self.T.get_lidar_vals()
+
+        reward = 0
         
         # reward = sum(-1/np.exp(10*lidar_vals-5) + 100)
         # Crashed into something, punish and end ep
+
+        done = False
+        # print(lidar_vals.max())
         if lidar_vals.max() == 999:
             reward = -100000
             done = True
             print('Hit something!')
             
-        reward = -(self.distance_from_target()**2)
+        reward += -(self.distance_from_target()**2)
         
         obs = self._next_observation()
-
-        done = False
         
         if self.distance_from_target() < target_tolerance:
             reward = 10000
@@ -83,7 +87,6 @@ class TurtlebotEnv(gym.Env):
         self.hist.record_position(self.T.get_position())
         self.hist.record_reward(reward)
 
-        done = False
         # print(reward)
         if self.action_count > 100:
             # Done with episode
@@ -94,6 +97,7 @@ class TurtlebotEnv(gym.Env):
     def _next_observation(self):
         motors = np.array([self.T.get_left_motor(), self.T.get_right_motor()])
         lidar_obs = self.T.get_lidar_vals()
+        # TODO - add robot's position
 
         return np.concatenate((motors, lidar_obs))
 
@@ -113,7 +117,9 @@ class TurtlebotEnv(gym.Env):
                 # pickle.dump(self, open(os.path.join(self.save_dir, "env_autosave.p"), "wb" ))
                 self.hist.save_episode(self.save_dir)
 
-
+        # self.simulationResetPhysics()
+        self.T.robot.simulationReset()
+        self.T.initialize_devices()
         self.ep_count +=1
 
         self.hist = EpisodeHistory(0, self.init_pos, self.target)      
