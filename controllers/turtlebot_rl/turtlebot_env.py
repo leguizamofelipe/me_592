@@ -1,3 +1,4 @@
+import math
 import gym
 import numpy as np
 import pandas as pd
@@ -31,7 +32,7 @@ class TurtlebotEnv(gym.Env):
 
         # Observe current motor speeds and 180 point LIDAR scan
         self.observation_space = spaces.Box
-        self.observation_space.n = 182 # TODO - Add robot's current position
+        self.observation_space.n = 184 # TODO - Add robot's current position
         self.observation_space.low = np.ones(self.observation_space.n) * -1
         self.observation_space.high = np.ones(self.observation_space.n)
 
@@ -72,17 +73,19 @@ class TurtlebotEnv(gym.Env):
         done = False
         # print(lidar_vals.max())
         if lidar_vals.max() == 999:
-            reward = -100
+            reward = -500
             done = True
             print('Hit something!')
             
-        reward += -(self.distance_from_target()**2)
+        reward += -math.exp(self.distance_from_target()**2)
         
         obs = self._next_observation()
         
         if self.distance_from_target() < target_tolerance:
             reward = 10000
             done = True
+            self.T.set_right_motor(0)
+            self.T.set_left_motor(0)
 
         self.hist.record_position(self.T.get_position())
         self.hist.record_reward(reward)
@@ -97,9 +100,10 @@ class TurtlebotEnv(gym.Env):
     def _next_observation(self):
         motors = np.array([self.T.get_left_motor(), self.T.get_right_motor()])
         lidar_obs = self.T.get_lidar_vals()
+        position = self.T.get_position()
         # TODO - add robot's position
 
-        return np.concatenate((motors, lidar_obs))
+        return np.concatenate((motors, lidar_obs, np.array([position.x, position.y])))
 
     def reset(self):
         self.T.set_right_motor(0)
@@ -110,12 +114,18 @@ class TurtlebotEnv(gym.Env):
 
         if self.hist is not None:
             self.hist_list.append(self.hist)
-            print(f'Ep Reward: {self.hist.total_reward()}')
+            # print(f'Ep Reward: {self.hist.total_reward()}')
             # Save every 2 eps
-            save_interval = 2
+            save_interval = 50
             if self.ep_count % save_interval == 0:
                 # pickle.dump(self, open(os.path.join(self.save_dir, "env_autosave.p"), "wb" ))
                 self.hist.save_episode(self.save_dir)
+                plt.plot([ep.total_reward() for ep in self.hist_list])
+                plt.title('Total Rewards')
+                plt.xlabel('Episode')
+                plt.ylabel('Reward')
+                plt.savefig(os.path.join(self.save_dir, '_reward.png'))
+                plt.close()
 
         # self.simulationResetPhysics()
         self.T.robot.simulationReset()
