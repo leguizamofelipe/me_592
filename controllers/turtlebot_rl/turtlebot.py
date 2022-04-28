@@ -48,10 +48,10 @@ class Turtlebot():
         return vals
 
     def set_right_motor(self, val):
-        self.right_motor.setVelocity(abs(val * self.MAX_SPEED))
+        self.right_motor.setVelocity(val * self.MAX_SPEED)
 
     def set_left_motor(self, val):
-        self.left_motor.setVelocity(abs(val * self.MAX_SPEED))
+        self.left_motor.setVelocity(val * self.MAX_SPEED)
 
     def get_right_motor(self):
         return self.right_motor.getVelocity() / self.MAX_SPEED

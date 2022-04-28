@@ -72,7 +72,7 @@ class TurtlebotEnv(gym.Env):
         done = False
         # print(lidar_vals.max())
         if lidar_vals.max() == 999:
-            reward = -100000
+            reward = -100
             done = True
             print('Hit something!')
             
