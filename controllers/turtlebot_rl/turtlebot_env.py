@@ -32,7 +32,7 @@ class TurtlebotEnv(gym.Env):
 
         # Observe current motor speeds and 180 point LIDAR scan
         self.observation_space = spaces.Box
-        self.observation_space.n = 184 # TODO - Add robot's current position
+        self.observation_space.n = 186 #6
         self.observation_space.low = np.ones(self.observation_space.n) * -1
         self.observation_space.high = np.ones(self.observation_space.n)
 
@@ -56,6 +56,8 @@ class TurtlebotEnv(gym.Env):
     def _take_action(self, action):
         self.T.set_left_motor(action[0])
         self.T.set_right_motor(action[1])
+        # print(self.T.get_turtlebot_angle())
+        pass
     
     def step(self, action):
         target_tolerance = 0.1
@@ -66,29 +68,37 @@ class TurtlebotEnv(gym.Env):
         lidar_vals = self.T.get_lidar_vals()
 
         reward = 0
-        
+
+        self.error = self.T.get_angle_error(self.target)
+
+        # gyro_angle = gyro_angle % 360
+        # print(self.T.get_turtlebot_angle()*180/math.pi)
+        # print(self.T.get_angle_error(self.target))
         # reward = sum(-1/np.exp(10*lidar_vals-5) + 100)
         # Crashed into something, punish and end ep
 
         done = False
         # print(lidar_vals.max())
         if lidar_vals.max() == 999:
-            reward = -500
+            reward = -100000
             done = True
             print('Hit something!')
             
-        reward += -math.exp(self.distance_from_target()**2)
+        reward += -math.exp(self.distance_from_target()/0.5) + -30*self.error**2
         
         obs = self._next_observation()
         
         if self.distance_from_target() < target_tolerance:
-            reward = 10000
+            reward = 100000
             done = True
             self.T.set_right_motor(0)
             self.T.set_left_motor(0)
 
         self.hist.record_position(self.T.get_position())
         self.hist.record_reward(reward)
+
+        # measure_interval = 3
+        # if self.action_count %  
 
         # print(reward)
         if self.action_count > 100:
@@ -101,9 +111,10 @@ class TurtlebotEnv(gym.Env):
         motors = np.array([self.T.get_left_motor(), self.T.get_right_motor()])
         lidar_obs = self.T.get_lidar_vals()
         position = self.T.get_position()
-        # TODO - add robot's position
+        distance_from_target = self.distance_from_target()
+        angular_error = self.T.get_angle_error(self.target)
 
-        return np.concatenate((motors, lidar_obs, np.array([position.x, position.y])))
+        return np.concatenate((motors, lidar_obs, np.array([position.x, position.y, angular_error, distance_from_target])))
 
     def reset(self):
         self.T.set_right_motor(0)

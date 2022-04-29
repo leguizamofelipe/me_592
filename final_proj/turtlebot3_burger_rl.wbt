@@ -3,8 +3,8 @@ WorldInfo {
   basicTimeStep 64
 }
 Viewpoint {
-  orientation 0.30354901608126383 0.7450896028306858 -0.5938850718697244 0.9904195757711772
-  position -2.647008604649702 1.7269326318433966 2.8127675678260586
+  orientation 0.2547577456397847 0.8931885743522037 -0.370557231319553 1.2656161715353031
+  position -1.0870150139365333 0.8052705402276887 4.17523614767295
   follow "TurtleBot3Burger"
   followType "Pan and Tilt Shot"
 }
@@ -13,30 +13,19 @@ TexturedBackground {
 TexturedBackgroundLight {
 }
 CircleArena {
-  radius 1.7
   wallHeight 0.4
 }
 WoodenBox {
-  translation 0.877367 -0.545426 0.15
+  translation 0.577367 0.084574 0.15
   size 0.3 0.3 0.3
 }
 WoodenBox {
-  translation 1.22737 0.054574 0.15
+  translation -0.49263 0.114574 0.15
   name "wooden box(8)"
   size 0.3 0.3 0.3
 }
 WoodenBox {
-  translation 1.22737 0.724574 0.15
-  name "wooden box(10)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation -0.28263 1.12457 0.15
-  name "wooden box(11)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation 0.48618 0.91342 0.15
+  translation 0.48618 0.55342 0.15
   name "wooden box(1)"
   size 0.3 0.3 0.3
 }
@@ -46,48 +35,13 @@ WoodenBox {
   size 0.3 0.3 0.3
 }
 WoodenBox {
-  translation -0.85271 0.44968 0.15
-  name "wooden box(3)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation -0.87271 1.15968 0.15
-  name "wooden box(12)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation -1.09887 -0.301011 0.15
+  translation -0.56887 -0.301011 0.15
   name "wooden box(4)"
   size 0.3 0.3 0.3
 }
 WoodenBox {
-  translation -0.48307 -0.22263 0.15
-  name "wooden box(7)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation 0.48103 0.203241 0.15
-  name "wooden box(9)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation 0.005323 -0.58959 0.15
+  translation 0.005323 -0.47959 0.15
   name "wooden box(5)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation 0.415323 -1.14959 0.15
-  name "wooden box(13)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation -0.6174 -0.9298 0.15
-  name "wooden box(6)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation -0.2074 -1.2998 0.15
-  name "wooden box(14)"
   size 0.3 0.3 0.3
 }
 TurtleBot3Burger {
