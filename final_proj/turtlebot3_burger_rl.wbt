@@ -3,8 +3,8 @@ WorldInfo {
   basicTimeStep 64
 }
 Viewpoint {
-  orientation 0.2547577456397847 0.8931885743522037 -0.370557231319553 1.2656161715353031
-  position -1.0870150139365333 0.8052705402276887 4.17523614767295
+  orientation 0.3149903067967043 0.7788150948142735 -0.5424280180019763 1.2440802750991626
+  position -1.341246325111982 1.437779862065394 3.934206287667502
   follow "TurtleBot3Burger"
   followType "Pan and Tilt Shot"
 }
@@ -15,45 +15,47 @@ TexturedBackgroundLight {
 CircleArena {
   wallHeight 0.4
 }
-WoodenBox {
-  translation 0.577367 0.084574 0.15
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation -0.49263 0.114574 0.15
-  name "wooden box(8)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation 0.48618 0.55342 0.15
-  name "wooden box(1)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation -0.15697 0.472967 0.15
-  name "wooden box(2)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation -0.56887 -0.301011 0.15
-  name "wooden box(4)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation 0.005323 -0.47959 0.15
-  name "wooden box(5)"
-  size 0.3 0.3 0.3
-}
 TurtleBot3Burger {
   hidden rotation_9 -0.7071047809782778 -6.78056995911854e-16 -0.7071087813891594 3.141588
   hidden rotation_10 0.004775774432190708 0.999987543919961 -0.0014505114605211072 0.004455596766671398
   translation -6.718718893738984e-09 -5.624575009845374e-10 -0.0004934370913047062
   rotation -0.00210485494590804 -0.9999977847400648 1.0030926647509807e-05 0.009364993302449732
   controller "turtlebot_rl"
+  supervisor TRUE
   extensionSlot [
     GPS {
     }
     RobotisLds01 {
     }
   ]
+}
+CardboardBox {
+  translation 0.3 -0.41 0
+  name "cardboard box(1)"
+  size 0.2 0.2 0.2
+}
+CardboardBox {
+  translation 0.6 0.58 0
+  name "cardboard box(2)"
+  size 0.2 0.2 0.2
+}
+CardboardBox {
+  translation -0.12 -0.67 0
+  name "cardboard box(3)"
+  size 0.2 0.2 0.2
+}
+CardboardBox {
+  translation -0.18 0.44 0
+  name "cardboard box(4)"
+  size 0.2 0.2 0.2
+}
+CardboardBox {
+  translation -0.47 -0.29 0
+  name "cardboard box(5)"
+  size 0.2 0.2 0.2
+}
+CardboardBox {
+  translation 0.3 0.11 0
+  name "cardboard box(6)"
+  size 0.2 0.2 0.2
 }
