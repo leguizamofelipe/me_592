@@ -32,7 +32,7 @@ class TurtlebotEnv(gym.Env):
 
         # Observe current motor speeds and 180 point LIDAR scan
         self.observation_space = spaces.Box
-        self.observation_space.n = 186 #6
+        self.observation_space.n = 185#6
         self.observation_space.low = np.ones(self.observation_space.n) * -1
         self.observation_space.high = np.ones(self.observation_space.n)
 
@@ -69,7 +69,7 @@ class TurtlebotEnv(gym.Env):
 
         reward = 0
 
-        self.error = self.T.get_angle_error(self.target)
+        self.error = self.T.get_angle_error_1(self.target)
 
         # gyro_angle = gyro_angle % 360
         # print(self.T.get_turtlebot_angle()*180/math.pi)
@@ -80,11 +80,14 @@ class TurtlebotEnv(gym.Env):
         done = False
         # print(lidar_vals.max())
         if lidar_vals.max() == 999:
-            reward = -100000
-            done = True
-            print('Hit something!')
+            reward = -1000
+        #    done = True
+        #    print('Hit something!')
             
-        reward += -math.exp(self.distance_from_target()/0.5) + -30*self.error**2
+        #reward += (-math.exp(self.distance_from_target()/0.5) + -3*self.error**2)
+        #reward += (-math.exp(self.distance_from_target()/0.5) + -3*self.error**2 + 1000/self.distance_from_target)
+        #reward += -3*self.error**2
+        reward += (1000/self.distance_from_target() + -3*self.error**2)
         
         obs = self._next_observation()
         
@@ -112,9 +115,10 @@ class TurtlebotEnv(gym.Env):
         lidar_obs = self.T.get_lidar_vals()
         position = self.T.get_position()
         distance_from_target = self.distance_from_target()
-        angular_error = self.T.get_angle_error(self.target)
+        #angular_error = self.T.get_angle_error_1(self.target)
 
-        return np.concatenate((motors, lidar_obs, np.array([position.x, position.y, angular_error, distance_from_target])))
+        #return np.concatenate((motors, lidar_obs, np.array([position.x, position.y, angular_error, distance_from_target])))
+        return np.concatenate((motors, lidar_obs, np.array([position.x, position.y, distance_from_target])))
 
     def reset(self):
         self.T.set_right_motor(0)
