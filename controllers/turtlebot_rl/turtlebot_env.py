@@ -1,5 +1,6 @@
 import math
 import gym
+from matplotlib.patches import Rectangle
 import numpy as np
 import pandas as pd
 import os
@@ -7,7 +8,7 @@ from random import randint
 import math
 import pickle
 # from controller import Supervisor
-
+from point import *
 import matplotlib.pyplot as plt
 import time
 
@@ -52,6 +53,13 @@ class TurtlebotEnv(gym.Env):
         os.makedirs(self.save_dir)
 
         self.init_pos = self.T.get_position()
+
+        # Read in box positions
+        boxes_df = pd.read_csv('boxes.csv')
+        
+        self.boxes = []
+        for line in boxes_df.index:
+            self.boxes.append(Point(boxes_df['x'][line], boxes_df['y'][line]))
 
     def _take_action(self, action):
         self.T.set_left_motor(action[0])
@@ -134,8 +142,9 @@ class TurtlebotEnv(gym.Env):
             save_interval = 50
             if self.ep_count % save_interval == 0:
                 # pickle.dump(self, open(os.path.join(self.save_dir, "env_autosave.p"), "wb" ))
-                self.hist.save_episode(self.save_dir)
-                plt.plot([ep.total_reward() for ep in self.hist_list])
+                self.hist.save_episode(self.save_dir, self.boxes)
+                fig, ax = plt.subplots()
+                ax.plot([ep.total_reward() for ep in self.hist_list])
                 plt.title('Total Rewards')
                 plt.xlabel('Episode')
                 plt.ylabel('Reward')

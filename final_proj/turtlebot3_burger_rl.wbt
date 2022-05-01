@@ -3,7 +3,7 @@ WorldInfo {
   basicTimeStep 64
 }
 Viewpoint {
-  orientation 0.3149903067967043 0.7788150948142735 -0.5424280180019763 1.2440802750991626
+  orientation 0.35387318031423415 0.725231019403096 -0.5906045553073866 1.3479639469781535
   position -1.341246325111982 1.437779862065394 3.934206287667502
   follow "TurtleBot3Burger"
   followType "Pan and Tilt Shot"
@@ -21,7 +21,6 @@ TurtleBot3Burger {
   translation -6.718718893738984e-09 -5.624575009845374e-10 -0.0004934370913047062
   rotation -0.00210485494590804 -0.9999977847400648 1.0030926647509807e-05 0.009364993302449732
   controller "turtlebot_rl"
-  supervisor TRUE
   extensionSlot [
     GPS {
     }
@@ -30,32 +29,32 @@ TurtleBot3Burger {
   ]
 }
 CardboardBox {
-  translation 0.3 -0.41 0
+  translation 0.3 -0.41 0.1
   name "cardboard box(1)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation 0.6 0.58 0
+  translation 0.6 0.58 0.1
   name "cardboard box(2)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation -0.12 -0.67 0
+  translation -0.12 -0.67 0.11
   name "cardboard box(3)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation -0.18 0.44 0
+  translation -0.18 0.44 0.1
   name "cardboard box(4)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation -0.47 -0.29 0
+  translation -0.47 -0.29 0.09
   name "cardboard box(5)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation 0.3 0.11 0
+  translation 0.3 0.11 0.09
   name "cardboard box(6)"
   size 0.2 0.2 0.2
 }

@@ -5,6 +5,8 @@ from matplotlib import pyplot as plt
 import time
 import os
 
+from matplotlib.patches import Rectangle
+
 class EpisodeHistory():
     def __init__(self, ep_no, init, target) -> None:
         self.ep_no = ep_no
@@ -29,14 +31,22 @@ class EpisodeHistory():
         return sum(self.reward_history)
     def record_steps(self, steps):
         self.final_steps = steps
-    def save_episode(self, save_dir):
+    def save_episode(self, save_dir, boxes = None):
         # ax = plt.axes(projection = '3d')
         ax= plt.axes()
-        ax.set_xlim([-3,3]) # Was 0.5
-        ax.set_ylim([-3,3]) # Was 0.5
+        ax.set_xlim([-1.5,1.5]) # Was 0.5
+        ax.set_ylim([-1.5,1.5]) # Was 0.5
         # ax.set_zlim([0,1])
         x_list = [point.x for point in self.endpoint_history]
         y_list = [point.y for point in self.endpoint_history]
+        
+        if boxes is None:
+            pass
+        else:
+            for box in boxes:
+                rect = Rectangle((box.x, box.y), 0.2, 0.2)
+                ax.add_patch(rect)
+
         # z_list = [point.z for point in self.endpoint_history]
         # ax.plot3D(x_list, y_list, z_list, 'blue')
         # ax.scatter3D(self.init.x, self.init.y, self.init.z, color = 'r')
