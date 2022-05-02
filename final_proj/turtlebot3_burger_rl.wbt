@@ -3,8 +3,8 @@ WorldInfo {
   basicTimeStep 64
 }
 Viewpoint {
-  orientation 0.2547577456397847 0.8931885743522037 -0.370557231319553 1.2656161715353031
-  position -1.0870150139365333 0.8052705402276887 4.17523614767295
+  orientation 0.5180795019210919 0.7111920585815144 -0.4751836334510913 1.9856022059480123
+  position 0.08770060576050254 -0.13796020826561184 4.138013978978758
   follow "TurtleBot3Burger"
   followType "Pan and Tilt Shot"
 }
@@ -16,40 +16,34 @@ CircleArena {
   wallHeight 0.4
 }
 WoodenBox {
-  translation 0.577367 0.084574 0.15
+  translation 0.627367 -0.135426 0.15
   size 0.3 0.3 0.3
 }
 WoodenBox {
-  translation -0.49263 0.114574 0.15
+  translation -0.11263 -0.015426 0.15
   name "wooden box(8)"
   size 0.3 0.3 0.3
 }
 WoodenBox {
-  translation 0.48618 0.55342 0.15
-  name "wooden box(1)"
-  size 0.3 0.3 0.3
-}
-WoodenBox {
-  translation -0.15697 0.472967 0.15
+  translation 0.28303 -0.607033 0.15
   name "wooden box(2)"
   size 0.3 0.3 0.3
 }
 WoodenBox {
-  translation -0.56887 -0.301011 0.15
+  translation -0.32887 -0.451011 0.15
   name "wooden box(4)"
   size 0.3 0.3 0.3
 }
 WoodenBox {
-  translation 0.005323 -0.47959 0.15
+  translation -0.204677 -0.81959 0.15
   name "wooden box(5)"
   size 0.3 0.3 0.3
 }
 TurtleBot3Burger {
-  hidden rotation_9 -0.7071047809782778 -6.78056995911854e-16 -0.7071087813891594 3.141588
-  hidden rotation_10 0.004775774432190708 0.999987543919961 -0.0014505114605211072 0.004455596766671398
-  translation -6.718718893738984e-09 -5.624575009845374e-10 -0.0004934370913047062
-  rotation -0.00210485494590804 -0.9999977847400648 1.0030926647509807e-05 0.009364993302449732
+  translation -0.736848 -0.0205515 -0.00649389
+  rotation -0.39804304616085573 -0.6851940794616194 0.609976070738624 0.0127588
   controller "turtlebot_rl"
+  supervisor TRUE
   extensionSlot [
     GPS {
     }
