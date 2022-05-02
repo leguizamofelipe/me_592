@@ -92,6 +92,7 @@ class Turtlebot():
         self.prev_time = self.robot.getTime()
         return self.gyro_angle
     
+    '''
     def get_angle_error(self, target):
         dx= target.x - self.get_position().x
         dy= target.y - self.get_position().y
@@ -101,16 +102,22 @@ class Turtlebot():
         # print(f'Turtlebot angle: {self.get_turtlebot_angle()}')
         # print(f'Error: {val}')
         return val
-
+    '''
+    
     def get_turtlebot_heading(self):
         #print(math.atan2(self.compass.getValues()[0], self.compass.getValues()[1])*180/math.pi)    
+        # print(self.compass.getValues())
         return math.atan2(self.compass.getValues()[0], self.compass.getValues()[1])
 
     def get_angle_error_1(self, target):
+        '''
         heading = self.get_turtlebot_heading()
         heading_vector = np.array([math.sin(heading), math.cos(heading)], dtype=float)
         goal_vector = np.array([target.x-self.get_position().x, target.y-self.get_position().y], dtype=float)
         val = math.acos((np.inner(heading_vector, goal_vector))/(np.sqrt(goal_vector.dot(goal_vector))))
-        #print(target, self.get_position().x, self.get_position().y, heading_vector, goal_vector)
-        #print(heading*180/math.pi, heading_vector, goal_vector, val*180/math.pi)
+        '''
+        heading = self.get_turtlebot_heading()
+        goal_vector = np.array([target.x-self.get_position().x, target.y-self.get_position().y], dtype=float)
+        goal_direction = math.atan2(goal_vector[1], goal_vector[0])
+        val = goal_direction-heading
         return val

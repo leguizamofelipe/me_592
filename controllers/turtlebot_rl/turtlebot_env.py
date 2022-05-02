@@ -1,6 +1,8 @@
 import math
 import gym
 from matplotlib.patches import Rectangle
+import matplotlib
+matplotlib.use('agg')
 import numpy as np
 import pandas as pd
 import os
@@ -28,12 +30,13 @@ class TurtlebotEnv(gym.Env):
         ####################################################################################
 
         # Send a velocity to left [0] and right [1] motor
-        self.action_space = spaces.Box(low = np.array([-1, -1]), high = np.array([1, 1]), dtype=np.float32)
+        self.action_space = spaces.Box(low = np.array([-0.5, -0.5]), high = np.array([0.5, 0.5]), dtype=np.float32)
         self.action_space.n = 2
 
         # Observe current motor speeds and 180 point LIDAR scan
         self.observation_space = spaces.Box
-        self.observation_space.n = 185#6
+        # self.observation_space.n = 185#6
+        self.observation_space.n = 6
         self.observation_space.low = np.ones(self.observation_space.n) * -1
         self.observation_space.high = np.ones(self.observation_space.n)
 
@@ -64,7 +67,7 @@ class TurtlebotEnv(gym.Env):
     def _take_action(self, action):
         self.T.set_left_motor(action[0])
         self.T.set_right_motor(action[1])
-        # print(self.T.get_turtlebot_angle())
+        # print(self.T.get_turtlebot_heading())
         pass
     
     def step(self, action):
@@ -87,32 +90,40 @@ class TurtlebotEnv(gym.Env):
 
         done = False
         # print(lidar_vals.max())
+        gamma = 0
         if lidar_vals.max() == 999:
-            reward = -1000
-        #    done = True
+            gamma = -100
+            done = True
         #    print('Hit something!')
             
-        #reward += (-math.exp(self.distance_from_target()/0.5) + -3*self.error**2)
-        #reward += (-math.exp(self.distance_from_target()/0.5) + -3*self.error**2 + 1000/self.distance_from_target)
+        # reward += (-math.exp(self.distance_from_target()/0.5) + -3*self.error**2)
+        # reward += (-math.exp(self.distance_from_target()/0.5) + -3*self.error**2 + 1000/self.distance_from_target)
         #reward += -3*self.error**2
-        reward += (1000/self.distance_from_target() + -3*self.error**2)
+        # reward += (1000/self.distance_from_target() + -3*self.error**2)
+        alpha = -math.exp(self.distance_from_target()/0.1)
+        beta = -750*self.error**2 
+        reward += alpha + beta + gamma
         
         obs = self._next_observation()
         
         if self.distance_from_target() < target_tolerance:
-            reward = 100000
+            reward = 1000000
             done = True
             self.T.set_right_motor(0)
             self.T.set_left_motor(0)
 
         self.hist.record_position(self.T.get_position())
         self.hist.record_reward(reward)
+        self.hist.record_proportions(alpha, beta, gamma, reward)
 
         # measure_interval = 3
         # if self.action_count %  
 
-        # print(reward)
-        if self.action_count > 100:
+        # print(f'Alpha: {alpha/reward}')
+        # print(f'Beta: {beta/reward}')
+        # print(f'Gamma: {gamma/reward}')
+        # print(f'Reward: {reward}')
+        if self.action_count > 200:
             # Done with episode
             done = True
 
@@ -120,13 +131,15 @@ class TurtlebotEnv(gym.Env):
 
     def _next_observation(self):
         motors = np.array([self.T.get_left_motor(), self.T.get_right_motor()])
-        lidar_obs = self.T.get_lidar_vals()
+        # lidar_obs = self.T.get_lidar_vals()
         position = self.T.get_position()
         distance_from_target = self.distance_from_target()
-        #angular_error = self.T.get_angle_error_1(self.target)
+        angular_error = self.T.get_angle_error_1(self.target)
 
         #return np.concatenate((motors, lidar_obs, np.array([position.x, position.y, angular_error, distance_from_target])))
-        return np.concatenate((motors, lidar_obs, np.array([position.x, position.y, distance_from_target])))
+        # return np.concatenate((motors, lidar_obs, np.array([position.x, position.y, distance_from_target])))
+        # return np.concatenate((motors, np.array([position.x, position.y, distance_from_target])))
+        return np.concatenate((motors, np.array([position.x, position.y, angular_error, distance_from_target])))
 
     def reset(self):
         self.T.set_right_motor(0)
@@ -141,8 +154,11 @@ class TurtlebotEnv(gym.Env):
             # Save every 2 eps
             save_interval = 50
             if self.ep_count % save_interval == 0:
+                save_dir = os.path.join(self.save_dir, str(int(time.time())))
+                os.makedirs(save_dir)
                 # pickle.dump(self, open(os.path.join(self.save_dir, "env_autosave.p"), "wb" ))
-                self.hist.save_episode(self.save_dir, self.boxes)
+                target_vec = np.array([self.target.x-self.T.get_position().x, self.target.y-self.T.get_position().y], dtype=float)
+                self.hist.save_episode(save_dir, self.boxes, addendum=f'\nErr: {self.T.get_angle_error_1(self.target)} \nT angle: {self.T.get_turtlebot_heading()} \nTarg angle: {target_vec}')
                 fig, ax = plt.subplots()
                 ax.plot([ep.total_reward() for ep in self.hist_list])
                 plt.title('Total Rewards')
