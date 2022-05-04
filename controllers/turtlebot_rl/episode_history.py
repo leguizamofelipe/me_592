@@ -51,7 +51,7 @@ class EpisodeHistory():
         else:
             for box in boxes:
                 rect = Rectangle((box.x, box.y), 0.2, 0.2)
-                # ax.add_patch(rect)
+                ax.add_patch(rect)
 
         # z_list = [point.z for point in self.endpoint_history]
         # ax.plot3D(x_list, y_list, z_list, 'blue')

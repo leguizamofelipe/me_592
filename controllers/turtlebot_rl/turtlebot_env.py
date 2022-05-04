@@ -29,8 +29,8 @@ class TurtlebotEnv(gym.Env):
         ################################## ACTION SPACE ####################################
         ####################################################################################
 
-        # Send a velocity to left [0] and right [1] motor
-        self.action_space = spaces.Box(low = np.array([-0.5, -0.5]), high = np.array([0.5, 0.5]), dtype=np.float32)
+        # Send thrust [0, 1] and turn command ([0, 1], where 0 is stopped and 1 is full) for each wheel
+        self.action_space = spaces.Box(low = np.array([0, 0, 0]), high = np.array([1, 1, 1]), dtype=np.float32)
         self.action_space.n = 2
 
         # Observe current motor speeds and 180 point LIDAR scan
@@ -65,8 +65,11 @@ class TurtlebotEnv(gym.Env):
             self.boxes.append(Point(boxes_df['x'][line], boxes_df['y'][line]))
 
     def _take_action(self, action):
-        self.T.set_left_motor(action[0])
-        self.T.set_right_motor(action[1])
+        thrust = action[0]
+        direction = action[2]
+
+        self.T.set_left_motor(thrust * direction)
+        self.T.set_right_motor(thrust * direction)
         # print(self.T.get_turtlebot_heading())
         pass
     
@@ -92,7 +95,7 @@ class TurtlebotEnv(gym.Env):
         # print(lidar_vals.max())
         gamma = 0
         if lidar_vals.max() == 999:
-            gamma = -100
+            gamma = -100000
             done = True
         #    print('Hit something!')
             
@@ -100,8 +103,8 @@ class TurtlebotEnv(gym.Env):
         # reward += (-math.exp(self.distance_from_target()/0.5) + -3*self.error**2 + 1000/self.distance_from_target)
         #reward += -3*self.error**2
         # reward += (1000/self.distance_from_target() + -3*self.error**2)
-        alpha = -math.exp(self.distance_from_target()/0.1)
-        beta = -750*self.error**2 
+        alpha = -math.exp(self.distance_from_target()/0.5)
+        beta = 0#-750*self.error**2 
         reward += alpha + beta + gamma
         
         obs = self._next_observation()
@@ -123,7 +126,7 @@ class TurtlebotEnv(gym.Env):
         # print(f'Beta: {beta/reward}')
         # print(f'Gamma: {gamma/reward}')
         # print(f'Reward: {reward}')
-        if self.action_count > 200:
+        if self.action_count > 10000:
             # Done with episode
             done = True
 

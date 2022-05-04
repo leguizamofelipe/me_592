@@ -3,8 +3,8 @@ WorldInfo {
   basicTimeStep 64
 }
 Viewpoint {
-  orientation 0.273113955540626 0.6205766029965903 -0.735046561179743 1.0354338161379848
-  position -2.5344137637503383 2.672707562742121 2.7299048852562553
+  orientation -0.14317011310029104 0.9460099445512854 0.29080492348810727 1.0344242247437871
+  position -2.093506118374515 -0.8174882039488608 3.7174813609985757
   follow "TurtleBot3Burger"
   followType "Pan and Tilt Shot"
 }
@@ -16,7 +16,7 @@ CircleArena {
   wallHeight 0.4
 }
 TurtleBot3Burger {
-  translation -6.718718893738984e-09 -5.624575009845374e-10 -0.0004934370913047062
+  translation -0.529983 -9.92693e-08 -0.00545685
   rotation -0.00210485494590804 -0.9999977847400648 1.0030926647509807e-05 0.009364993302449732
   controller "turtlebot_rl"
   extensionSlot [
@@ -27,32 +27,32 @@ TurtleBot3Burger {
   ]
 }
 CardboardBox {
-  translation 0.3 -0.41 -0.13
+  translation 0.01 -0.28 0.13
   name "cardboard box(1)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation 0.6 0.58 -0.13
+  translation 0.11 0.68 0.13
   name "cardboard box(2)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation -0.12 -0.67 -0.12
+  translation -0.12 -0.67 0.14
   name "cardboard box(3)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation -0.18 0.44 -0.12
+  translation -0.18 0.52 0.09
   name "cardboard box(4)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation -0.47 -0.29 -0.13
+  translation -0.47 -0.51 0.18
   name "cardboard box(5)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation 0.3 0.11 -0.12
+  translation 0.5 0.01 0.13
   name "cardboard box(6)"
   size 0.2 0.2 0.2
 }
