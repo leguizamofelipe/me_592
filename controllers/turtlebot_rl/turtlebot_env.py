@@ -66,10 +66,11 @@ class TurtlebotEnv(gym.Env):
 
     def _take_action(self, action):
         thrust = action[0]
-        direction = action[2]
+        right_direction = action[1]
+        left_direction = action[2]
 
-        self.T.set_left_motor(thrust * direction)
-        self.T.set_right_motor(thrust * direction)
+        self.T.set_left_motor(thrust * left_direction)
+        self.T.set_right_motor(thrust * right_direction)
         # print(self.T.get_turtlebot_heading())
         pass
     
