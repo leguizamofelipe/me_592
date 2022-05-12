@@ -7,7 +7,7 @@ from point import Point
 from stable_baselines3 import PPO
 
 target = Point(0.5, 0.5)
-time_steps = 1000000
+time_steps = 5e6
 
 T = Turtlebot()
 

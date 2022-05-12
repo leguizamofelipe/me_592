@@ -54,7 +54,7 @@ class Turtlebot():
         while(self.robot.step(self.TIME_STEP) != -1):
             vals = np.array(self.lidar.getRangeImage())
             break
-        vals[vals==np.inf] = 999
+        vals[vals==np.inf] = 0
         # print(vals)
         vals = vals[90:270]
         # print(vals)

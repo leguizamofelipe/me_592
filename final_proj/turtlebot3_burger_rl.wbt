@@ -3,8 +3,8 @@ WorldInfo {
   basicTimeStep 64
 }
 Viewpoint {
-  orientation -0.14317011310029104 0.9460099445512854 0.29080492348810727 1.0344242247437871
-  position -2.093506118374515 -0.8174882039488608 3.7174813609985757
+  orientation -0.1509298970963285 0.9364019123593579 0.31681481135235645 1.0122596392188055
+  position -2.1860922448485454 -0.8891601053103064 3.660078123086098
   follow "TurtleBot3Burger"
   followType "Pan and Tilt Shot"
 }
@@ -27,12 +27,12 @@ TurtleBot3Burger {
   ]
 }
 CardboardBox {
-  translation 0.01 -0.28 0.13
+  translation 0.06 -0.04 0.13
   name "cardboard box(1)"
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation 0.11 0.68 0.13
+  translation 0.11 0.83 0.13
   name "cardboard box(2)"
   size 0.2 0.2 0.2
 }
@@ -42,7 +42,7 @@ CardboardBox {
   size 0.2 0.2 0.2
 }
 CardboardBox {
-  translation -0.18 0.52 0.09
+  translation -0.18 0.79 0.09
   name "cardboard box(4)"
   size 0.2 0.2 0.2
 }
